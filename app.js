@@ -152,9 +152,9 @@ let gameList = [
 
 
 function pickGame() {
-	let numGames = gameList.length;
-	let choice = Math.floor(Math.random() * numGames);
-	return gameList[choice];
+    let numGames = gameList.length;
+    let choice = Math.floor(Math.random() * numGames);
+    return gameList[choice];
 }
 
 function toRegex(s) {
@@ -302,10 +302,10 @@ bot.on('ready', () => {
 });
 
 function swapGame() {
-	let picked = pickGame();
-	bot.user.setGame(picked);
+    let picked = pickGame();
+    bot.user.setGame(picked);
 
-	setTimeout(() => swapGame(), 10 * 60 * 1000);
+    setTimeout(() => swapGame(), 10 * 60 * 1000);
 }
 
 bot.on("message", msg => {
@@ -327,6 +327,14 @@ if (msg.content === "/exodia") {
 
     if (msg.content && msg.content.toLowerCase && msg.content.toLowerCase() === "doot doot") {
         msg.channel.sendMessage("🎺 🎺");
+    }
+
+    if (msg.content === "/deardexter") {
+        msg.channel.sendMessage("", { file: "http://i.imgur.com/FpqoQa1.png" });
+    }
+
+    if (msg.content === "/blue") {
+        msg.channel.sendMessage("", { file: "https://upload.wikimedia.org/wikipedia/en/8/8b/Purplecom.jpg" });
     }
 
     animeWasAMistake(msg);
