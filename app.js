@@ -3,6 +3,7 @@ const request = require("request");
 const scrapeIt = require("scrape-it");
 const imgur = require("imgur");
 const cbn = require("cleverbot-node");
+const d20 = require("d20");
 
 const bot = new Discord.Client();
 
@@ -285,14 +286,20 @@ const cb = new cbn();
 cb.configure({ botapi: require("./secrets").clever });
 
 function cleverbot(msg) {
-    if(msg.isMentioned(bot.user) || Math.random() < 0.01) {
+    if(msg.isMentioned(bot.user) || Math.random() < 0.02) {
         jackal.log("I was mentioned: '" + msg.content + "'");
+
+        if (Math.random() < 0.04) {
+            msg.channel.sendMessage(msg.author + " " + sponge(msg.content));
+        }
 
         cb.write(msg.content, response => {
             if (response && response.output) {
                 msg.channel.sendMessage(msg.author + " " + response.output);
             }
         });
+    } else if (Math.random() < 0.01) {
+        msg.channel.sendMessage(msg.author + " " + sponge(msg.content));
     }
 }
 
@@ -308,6 +315,109 @@ function swapGame() {
     setTimeout(() => swapGame(), 10 * 60 * 1000);
 }
 
+function sponge(str) {
+  var built = "";
+  var div = 2;
+  for (var c in str) {
+    var lc = str[c].toLowerCase();
+    if (Math.random() > (1 / 2)) {
+      lc = lc.toUpperCase();
+      div += 0.5;
+    } else {
+      div += 2;
+    }
+    
+    built += lc;
+  }
+  
+  return built;
+}
+
+let game = undefined;
+
+function whengame(msg) {
+    if (msg.isMentioned(bot.user)) {
+        let re = /when (?:does|do|did|will|is) (.+) (?:come|coming|gonna be|will be)? (?:out)?/;
+        let match = msg.content.toLowerCase().match(re);
+
+        if (match) {
+            jackal.log("Trying to find game " + match[1]);
+
+            if(match[1].indexOf("destiny 2") + 1) {
+                const temp = [
+                    'if (strcmp(*match[1], "Destiny 2")) { printf(destiny2ReleaseDateForPC()) } else { printf(search(&match[1])) }',
+                    'print(destiny2_release_date_for_pc() if match[1] == "Destiny 2" else search(match[1]))',
+                    'if (match[1] === "Destiny 2") { print(destiny2ReleaseDateForPC()) } else { print(search(match[1)) }',
+                    'if (match[1].equals("Destiny 2")) { System.out.println(destiny2ReleaseDateForPC()) } else { System.out.println(search(match[1)) }',
+                    '(print (if (eq (index match 1) "Destiny 2") (destiny2ReleaseDateForPC) (search (index match 1))))',
+                    'print (if ((snd match) = "Destiny 2") then (destiny2ReleaseDateForPC ()) else (search (snd match)))'
+                ];
+                const sel = Math.floor(Math.random() * temp.length);
+
+                const msgs2 = msg.channel.sendMessage(msg.author + " " + temp[sel]);
+                if (msgs2) {
+                    msgs2.then(msgsg => msgsg.react(":bill_bill_bill:"));
+                }
+                return;
+            }
+
+            const url = "https://www.giantbomb.com/api/search?api_key=784cd4d79994d600c7fcece2c198b1b859436176&format=json&resources=game&query=" + encodeURIComponent(match[1]);
+            const options = {
+              url: url,
+              headers: {
+                'User-Agent': 'anime-was-a-mistake discord bot'
+              }
+            };
+
+            request(options, function (error, response, body) {
+                if (!error && response.statusCode === 200) {
+                    let json = JSON.parse(body);
+                    if (json && json.results.length > 1) {
+                        let result = json.results[0];
+                        let name = result.name;
+                        let dateStr = result.original_release_date;
+                        if (result.expected_release_year && result.expected_release_month && result.expected_release_day) {
+                            dateStr = "" + result.expected_release_year + "-" + result.expected_release_month + "-" + result.expected_release_day;
+                        }
+
+                        if (!dateStr) {
+                            msg.channel.sendMessage(msg.author + " " + "I don't think '" + name + "' has a known release date yet.");
+                            return;
+                        } else {
+                            let date = new Date(dateStr);
+                            let today = new Date();
+
+                            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                            const datePretty = date.toLocaleDateString("en-US", options);
+
+                            if (date < today) {
+                                msg.channel.sendMessage(msg.author + " " + "'" + name + "' already came out on " + datePretty + ".");
+                            } else {
+                                msg.channel.sendMessage(msg.author + " " + "'" + name + "' should come out on " + datePretty + ".");
+                            }
+
+                            return;
+                        }
+
+                        return;
+                    } else {
+                        jackal.log("No results for " + match[1]);
+                    }
+                } else {
+                    console.error(error);
+                    console.log(response);
+                }
+                msg.channel.sendMessage(msg.author + " " + "I couldn't be bothered to find the release date of '" + match[1] + "'.");
+                
+            });
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
 bot.on("message", msg => {
     if (msg.author.bot) return; 
 
@@ -317,7 +427,9 @@ bot.on("message", msg => {
 
     pearRequest(msg);
 
-    cleverbot(msg);
+    if (!whengame(msg)) {
+        cleverbot(msg);
+    }
 
 if (msg.content === "/exodia") {
   msg.channel.sendMessage(".\n"+
@@ -329,12 +441,58 @@ if (msg.content === "/exodia") {
         msg.channel.sendMessage("🎺 🎺");
     }
 
-    if (msg.content === "/deardexter") {
+    if (msg.content.toLowerCase().indexOf("noot noot") + 1) {
+        msg.channel.sendMessage("", { file: "http://i.imgur.com/8TX82VJ.jpg" });
+    }
+
+    if (msg.content === "/deardexter" || msg.content === "/dearme" && msg.author.username.indexOf("afrodynamics") >= 0) {
         msg.channel.sendMessage("", { file: "http://i.imgur.com/FpqoQa1.png" });
     }
 
     if (msg.content === "/blue") {
         msg.channel.sendMessage("", { file: "https://upload.wikimedia.org/wikipedia/en/8/8b/Purplecom.jpg" });
+    }
+
+    if (msg.content.indexOf("/losangeles") + 1) {
+        msg.channel.sendMessage("", { file: "http://i.imgur.com/SHBazSF.gif" });
+    }
+
+    if (msg.content.toLowerCase().indexOf("/alexsays") + 1) {
+        msg.channel.sendMessage("<:rekwah:298691352210964480> ＤＲＩＮＫＹＯＵＲＶＥＧＥＭＩＴＥ <:hawker:298689474802483201>");
+    }
+
+    if (msg.content.toLowerCase().match(/.*j+a+s+o+n+!+.*/)) {
+        msg.react("🎈");
+        msg.channel.send(msg.author, { reply: msg.author, file: "https://i.imgur.com/umeW9Sb.png" });
+    }
+
+    if (msg.content.toLowerCase().match(/[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g)) {
+        msg.react("😍");
+        msg.channel.send(msg.author, { file: "https://i.imgur.com/VGiD6d6.png" });
+    }
+
+    try {
+    const rollMatch = msg.content.match(/\/roll ([0-9d+\- ]+)(?:(?:for )(.*))?/);
+    if (rollMatch && rollMatch[1]) {
+        const firstNum = rollMatch[1].match(/(\d+).*(\d+)?/);
+        if (firstNum && firstNum[1]) {
+            if (Number(firstNum[1]) > 10000 && (!firstNum[2] || Number(firstNum[2]) > 10000)) {
+                msg.channel.send(msg.author + " No.");
+                return;
+            }
+        }
+
+
+        const result = d20.roll(rollMatch[1]);
+        const type = rollMatch[2] ? ("for " + rollMatch[2].trim() + " ") : "";
+        if (result === 0) {
+            msg.channel.send(msg.author + " rolled " + "0 " + type + "(which means you either input an incorrect roll command, or you rolled a zero somehow)");
+        } else {
+            msg.channel.send(msg.author + " rolled " + String(result) + " " + type);
+        }
+    }
+    } catch (err) {
+        msg.channel.send(msg.author + " please don't ");
     }
 
     animeWasAMistake(msg);
@@ -376,6 +534,6 @@ app.get('/', function (req, res) {
     res.send("<html>" + logBlock);
 });
 
-app.listen(process.env.PORT || 3000, function () {
-    jackal.log("App listening on port " + (process.env.PORT || 3000));
+app.listen(process.env.PORT || 3001, function () {
+    jackal.log("App listening on port " + (process.env.PORT || 3001));
 });
