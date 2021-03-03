@@ -1,0 +1,35 @@
+{
+  "name": "animewasamistake",
+  "version": "1.0.0",
+  "description": "Bad code for a bad bot",
+  "main": "app.js",
+  "scripts": {
+    "run": "ts-node app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/y2bd/animewasamistake.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/y2bd/animewasamistake/issues"
+  },
+  "homepage": "https://github.com/y2bd/animewasamistake#readme",
+  "dependencies": {
+    "cleverbot-node": "0.3.11",
+    "d20": "1.4.1",
+    "discord.js": "12.5.1",
+    "google": "2.1.0",
+    "imgur": "0.3.2",
+    "scrape-it": "5.3.1",
+    "ts-node": "9.1.1"
+  },
+  "devDependencies": {
+    "@types/d20": "1.4.0",
+    "@types/node": "14.14.31",
+    "@types/request": "2.48.5",
+    "typescript": "4.2.2"
+  }
+}
