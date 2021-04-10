@@ -28,7 +28,7 @@ jobs:
 
       - name: Pull new BHG
         if: ${{ always() }}
-        run: ssh deploy 'cd projects/anime-was-a-mistake/ && git pull origin master'
+        run: ssh deploy 'cd projects/anime-was-a-mistake/ && git fetch && git reset --hard origin/master'
 
       - name: Start the server
         if: ${{ always() }}
