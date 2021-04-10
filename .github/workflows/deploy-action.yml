@@ -27,6 +27,7 @@ jobs:
         run: ssh deploy 'forever stop 0'
 
       - name: Pull new BHG
+        if: ${{ always() }}
         run: ssh deploy 'cd projects/anime-was-a-mistake/ && git pull origin master'
 
       - name: Start the server
