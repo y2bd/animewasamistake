@@ -24,7 +24,7 @@ jobs:
           SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
       - name: Stop BHG
-        run: ssh deploy 'forever stop 0'
+        run: ssh deploy '~/.kill-bhg.sh'
 
       - name: Pull new BHG
         if: ${{ always() }}
