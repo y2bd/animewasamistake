@@ -11,7 +11,7 @@ function animateFirst(msg: DJ.Message, i: number) {
   const max = 20;
   const str = "--------------------";
 
-  const fun = replaceAt(str, i, "=");
+  const fun = replaceAt(str, i, "○");
   msg.channel.send(fun).then((next) => {
     if (i + 1 < max) {
       setTimeout(() => animateNext(next, i + 1), 1000);
@@ -23,7 +23,7 @@ function animateNext(msg: DJ.Message, i: number) {
   const max = 20;
   const str = "--------------------";
 
-  const fun = replaceAt(str, i, "=");
+  const fun = replaceAt(str, i, "○");
   msg.edit(fun).then((next) => {
     if (i + 1 < max) {
       setTimeout(() => animateNext(next, i + 1), 1000);
