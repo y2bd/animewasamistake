@@ -20,7 +20,6 @@ const words = [
   "speed",
   "quick",
   "zoom",
-  "run",
   "sprint",
   "tails",
   "knuckles",
