@@ -25,4 +25,5 @@ const words = [
   "tails",
   "knuckles",
   "amy",
+  "hedgehog",
 ];
