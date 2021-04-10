@@ -20,8 +20,8 @@ jobs:
           END
         env:
           SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
-          SSH_KEY: ${{ secrets.DEPLOY_SSH_USER }}
-          SSH_HOST: ${{ secrets.DEPLOY_SSH_USER }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
 
       - name: Stop BHG
         run: ssh deploy 'forever stop 0'
