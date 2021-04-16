@@ -12,6 +12,7 @@ export function tomatoTown(bot: DJ.Client, msg: DJ.Message) {
 
     if (levenshtein(minimizedMessage, minimizedLyric) <= 8) {
       msg.channel.send(song[index + 1]);
+      return;
     }
   }
 }
@@ -71,4 +72,6 @@ A victory royale
 Take me to your Xbox to play fortnite today
 You can take me to moist mire but not loot lake
 I really love to, chug with you
-We can be pro fortnite gamers`.split("\n");
+We can be pro fortnite gamers`
+  .toLowerCase()
+  .split("\n");
