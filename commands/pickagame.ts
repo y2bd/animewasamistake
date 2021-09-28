@@ -95,4 +95,13 @@ const gameList = [
   "Frog Fractions",
   "Pokemon Pinball",
   "Yu-Gi-Oh! - The Eternal Duelist Soul",
+  "Star Wars: Knights of the Old Republic 3 (CLOSED ALPHA)",
+  "PortalWars.exe",
+  "Deltarune Chapter 4",
+  "Macromedia Flash 5",
+  "Adobe Photoshop CS2 (CRACKED NO INSTALLER)",
+  "Fortnite (just kidding)",
+  "github.com/y2bd/animewasamistake",
+  "Bonestorm",
+  "Lee Carvallo's Putting Challenge"
 ];
