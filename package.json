@@ -25,12 +25,14 @@
     "google": "2.1.0",
     "imgur": "0.3.2",
     "js-levenshtein": "1.1.6",
+    "luxon": "2.0.2",
     "scrape-it": "5.3.1",
     "ts-node": "9.1.1"
   },
   "devDependencies": {
     "@types/d20": "1.4.0",
     "@types/js-levenshtein": "1.1.0",
+    "@types/luxon": "2.0.4",
     "@types/node": "14.14.31",
     "@types/request": "2.48.5",
     "forever": "3.0.4",

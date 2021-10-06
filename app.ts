@@ -18,6 +18,7 @@ import { roll } from "./commands/roll";
 import { sanic } from "./commands/sanic";
 import { stephenWaifu } from "./commands/stephenWaifu";
 import { tomatoTown } from "./commands/tomatoTown";
+import { tomatoTime } from "./commands/tomatoTime";
 import { whenGame } from "./commands/whengame";
 import { xkcdRequest } from "./commands/xkcdreq";
 import { xkcdSearch } from "./commands/xkcdsearch";
@@ -40,6 +41,7 @@ const commands = [
   roll,
   sanic,
   stephenWaifu,
+  tomatoTime,
   tomatoTown,
   whenGame,
   xkcdRequest,
