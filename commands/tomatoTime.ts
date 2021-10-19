@@ -21,7 +21,18 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
     const currentLosAngelesTime = DateTime.now().setZone("America/Los_Angeles");
     const hour = +(timeMatch?.groups?.hour ?? currentLosAngelesTime.hour) % 24;
     const minute =
-      +(timeMatch?.groups?.min ?? currentLosAngelesTime.minute) % 60;
+      // +(timeMatch?.groups?.min ?? currentLosAngelesTime.minute) % 60;
+      (() => {
+        if (timeMatch?.groups?.min !== undefined) {
+          return +timeMatch.groups.min % 60;
+        } else if (timeMatch?.groups?.hour !== undefined) {
+          // if they specify an hour assume zero minutes
+          return 0;
+        } else {
+          // assume current time
+          return currentLosAngelesTime.minute;
+        }
+      })();
 
     const ampm: string =
       timeMatch?.groups?.ampm ??
