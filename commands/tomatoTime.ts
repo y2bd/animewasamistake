@@ -2,7 +2,12 @@ import * as DJ from "discord.js";
 import { DateTime, Zone } from "luxon";
 
 export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
-  if (!msg.content.toLowerCase().startsWith("/tomatotime")) {
+  if (
+    !msg.content.toLowerCase().startsWith("/tomatotime") ||
+    !msg.content.toLowerCase().startsWith("/angietime") ||
+    !msg.content.toLowerCase().startsWith("/tt") ||
+    !msg.content.toLowerCase().startsWith("/at")
+  ) {
     return;
   }
 
@@ -10,47 +15,54 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
     const timeMatch = msg.content
       .toLowerCase()
       .match(
-        /\/tomatotime (?<hour>[0-9]{1,2})(?::(?<min>[0-9]{1,2}))?\W*(?<ampm>am|pm)$/
+        /\/(?<cmd>tomatotime|tt|angietime|at) (?<hour>[0-9]{1,2})(?::?(?<min>[0-9]{1,2}))?\W*(?<ampm>am?|pm?)/
       );
 
     const currentLosAngelesTime = DateTime.now().setZone("America/Los_Angeles");
     const hour = +(timeMatch?.groups?.hour ?? currentLosAngelesTime.hour) % 24;
-    const minute = +(timeMatch?.groups?.min ?? "00") % 60;
+    const minute =
+      +(timeMatch?.groups?.min ?? currentLosAngelesTime.minute) % 60;
 
     const ampm: string =
       timeMatch?.groups?.ampm ??
       (currentLosAngelesTime.hour > 12 ? "pm" : "am");
 
     let adjustedHour = hour;
-    if (ampm === "am" && hour === 12) {
+    if (ampm.startsWith("a") && hour === 12) {
       adjustedHour = 0;
     }
 
-    if (ampm === "pm" && hour < 12) {
+    if (ampm.startsWith("p") && hour < 12) {
       adjustedHour = hour + 12;
     }
 
     console.log(adjustedHour, minute, hour, ampm);
 
-    let losAngelesDate = DateTime.fromObject(
+    let currentDate = DateTime.fromObject(
       { hour: adjustedHour, minute },
       { zone: "America/Los_Angeles" }
-    );
+    ).toLocaleString(DateTime.TIME_SIMPLE);
+
     let melbourneDate = DateTime.fromObject(
       { hour: adjustedHour, minute },
+      { zone: "America/Los_Angeles" }
+    )
+      .setZone("Australia/Melbourne")
+      .toLocaleString(DateTime.TIME_SIMPLE);
+
+    let losAngelesDate = DateTime.fromObject(
+      { hour: adjustedHour, minute },
       { zone: "Australia/Melbourne" }
+    )
+      .setZone("Australia/Los_Angeles")
+      .toLocaleString(DateTime.TIME_SIMPLE);
+
+    msg.channel.send(
+      `If it's ${currentDate} in Sydney, it would be **${melbourneDate}** in SF.`
     );
 
     msg.channel.send(
-      `If that time was from Melbourne, it would be **${melbourneDate
-        .setZone("America/Los_Angeles")
-        .toLocaleString(DateTime.TIME_SIMPLE)}** in LA.`
-    );
-
-    msg.channel.send(
-      `If that time was from Los Angeles, it would be **${losAngelesDate
-        .setZone("Australia/Melbourne")
-        .toLocaleString(DateTime.TIME_SIMPLE)}** in Melbourne.`
+      `If it's ${currentDate} in San Francisco, it would be **${losAngelesDate}** in Sydney.`
     );
   } catch (err) {
     msg.channel.send(
