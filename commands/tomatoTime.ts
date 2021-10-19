@@ -15,7 +15,7 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
     const timeMatch = msg.content
       .toLowerCase()
       .match(
-        /\/(?<cmd>tomatotime|tt|angietime|at) (?<hour>[0-9]{1,2})(?::?(?<min>[0-9]{1,2}))?\W*(?<ampm>am?|pm?)/
+        /\/(?<cmd>tomatotime|tt|angietime|at) (?<hour>[0-9]{1,2})(?::?(?<min>[0-9]{1,2}))?\W*(?<ampm>am?|pm?)?/
       );
 
     const currentLosAngelesTime = DateTime.now().setZone("America/Los_Angeles");
@@ -58,11 +58,11 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     msg.channel.send(
-      `If it's ${currentDate} in Sydney, it would be **${melbourneDate}** in SF.`
+      `If it's ${currentDate} in Sydney, it would be **${losAngelesDate}** in SF.`
     );
 
     msg.channel.send(
-      `If it's ${currentDate} in San Francisco, it would be **${losAngelesDate}** in Sydney.`
+      `If it's ${currentDate} in San Francisco, it would be **${melbourneDate}** in Sydney.`
     );
   } catch (err) {
     msg.channel.send(
