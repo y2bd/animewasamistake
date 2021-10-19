@@ -3,10 +3,10 @@ import { DateTime, Zone } from "luxon";
 
 export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
   if (
-    !msg.content.toLowerCase().startsWith("/tomatotime") ||
-    !msg.content.toLowerCase().startsWith("/angietime") ||
-    !msg.content.toLowerCase().startsWith("/tt") ||
-    !msg.content.toLowerCase().startsWith("/at")
+    !msg.content.toLowerCase().includes("/tomatotime") &&
+    !msg.content.toLowerCase().includes("/angietime") &&
+    !msg.content.toLowerCase().includes("/tt") &&
+    !msg.content.toLowerCase().includes("/at")
   ) {
     return;
   }
