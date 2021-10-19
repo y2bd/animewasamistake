@@ -54,7 +54,7 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
       { hour: adjustedHour, minute },
       { zone: "Australia/Melbourne" }
     )
-      .setZone("Australia/Los_Angeles")
+      .setZone("America/Los_Angeles")
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     msg.channel.send(
