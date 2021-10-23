@@ -23,6 +23,7 @@ import { whenGame } from "./commands/whengame";
 import { xkcdRequest } from "./commands/xkcdreq";
 import { xkcdSearch } from "./commands/xkcdsearch";
 import secrets from "./secrets";
+import { losangeles } from "./commands/losangeles";
 
 const commands = [
   alexSays,
@@ -35,6 +36,7 @@ const commands = [
   dootdoot,
   exodia,
   girafarig,
+  losangeles,
   nootnoot,
   pearRequest,
   pressXToJson,
