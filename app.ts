@@ -1,5 +1,4 @@
 import Discord from "discord.js";
-import { unlink } from "fs";
 import { alexSays } from "./commands/alexSays";
 import { animate } from "./commands/animate";
 import { animeWasAMistake } from "./commands/animewasamistake";
@@ -10,6 +9,8 @@ import { dearDexter } from "./commands/deardexter";
 import { dootdoot } from "./commands/dootdoot";
 import { exodia } from "./commands/exodia";
 import { girafarig } from "./commands/girafarig";
+import { irony } from "./commands/irony";
+import { losangeles } from "./commands/losangeles";
 import { nootnoot } from "./commands/nootnoot";
 import { pearRequest } from "./commands/pearreq";
 import { swapGame } from "./commands/pickagame";
@@ -17,13 +18,12 @@ import { pressXToJson } from "./commands/pressXToJson";
 import { roll } from "./commands/roll";
 import { sanic } from "./commands/sanic";
 import { stephenWaifu } from "./commands/stephenWaifu";
-import { tomatoTown } from "./commands/tomatoTown";
 import { tomatoTime } from "./commands/tomatoTime";
+import { tomatoTown } from "./commands/tomatoTown";
 import { whenGame } from "./commands/whengame";
 import { xkcdRequest } from "./commands/xkcdreq";
 import { xkcdSearch } from "./commands/xkcdsearch";
 import secrets from "./secrets";
-import { losangeles } from "./commands/losangeles";
 
 const commands = [
   alexSays,
@@ -36,6 +36,7 @@ const commands = [
   dootdoot,
   exodia,
   girafarig,
+  irony,
   losangeles,
   nootnoot,
   pearRequest,
