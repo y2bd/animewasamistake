@@ -29,7 +29,7 @@ function startTetrisSession(bot: DJ.Client, msg: DJ.Message) {
     );
   }
 
-  msg.reply("Let's play Tetris! Guess a five-letter word with /trsp <guess>.");
+  msg.reply("Let's play a game! Guess a five-letter word with /trsp <guess>.");
 
   activeSessions[currentPlayerId] = {
     playerId: currentPlayerId,
