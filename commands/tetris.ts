@@ -16,6 +16,7 @@ type Session = {
   playerId: PlayerId;
   answer: string;
   guesses: string[];
+  deadLetters: Set<string>;
 };
 
 const activeSessions: Record<PlayerId, Session> = {};
@@ -34,6 +35,7 @@ function startTetrisSession(bot: DJ.Client, msg: DJ.Message) {
     playerId: currentPlayerId,
     answer: words[Math.floor(Math.random() * words.length)],
     guesses: [],
+    deadLetters: new Set<string>(),
   };
 }
 
@@ -58,12 +60,11 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
     return;
   }
 
-  let response = "";
+  let response = ["", "", "", "", ""];
   let claimedLetterIndices: number[] = [];
-  let deadLetters: string[] = [];
   for (let i = 0; i < 5; i++) {
     if (guess[i] === currentSession.answer[i]) {
-      response += ":green_square:";
+      response[i] = ":green_square:";
       claimedLetterIndices.push(i);
     }
   }
@@ -73,10 +74,10 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
       currentSession.answer.includes(guess[i]) &&
       !claimedLetterIndices.includes(i)
     ) {
-      response += ":yellow_square:";
+      response[i] = ":yellow_square:";
     } else if (!claimedLetterIndices.includes(i)) {
-      response += ":black_large_square:";
-      deadLetters.push(guess[i]);
+      response[i] = ":black_large_square:";
+      currentSession.deadLetters.add(guess[i]);
     }
   }
 
@@ -84,9 +85,13 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
     "You guessed '" +
       guess.toUpperCase() +
       "', your result is " +
-      response +
+      response.join("") +
       ", dead letters are " +
-      deadLetters.slice().sort().join("").toUpperCase()
+      Array.from(currentSession.deadLetters)
+        .slice()
+        .sort()
+        .join("")
+        .toUpperCase()
   );
   currentSession.guesses.push(guess);
 }
