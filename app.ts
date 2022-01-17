@@ -18,6 +18,7 @@ import { pressXToJson } from "./commands/pressXToJson";
 import { roll } from "./commands/roll";
 import { sanic } from "./commands/sanic";
 import { stephenWaifu } from "./commands/stephenWaifu";
+import { tetris } from "./commands/tetris";
 import { tomatoTime } from "./commands/tomatoTime";
 import { tomatoTown } from "./commands/tomatoTown";
 import { whenGame } from "./commands/whengame";
@@ -44,6 +45,7 @@ const commands = [
   roll,
   sanic,
   stephenWaifu,
+  tetris,
   tomatoTime,
   tomatoTown,
   whenGame,
