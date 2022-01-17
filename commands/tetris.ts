@@ -70,13 +70,13 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
 
   for (let i = 0; i < 5; i++) {
     if (
-      currentSession.answer[i].includes(guess[i]) &&
+      currentSession.answer.includes(guess[i]) &&
       !claimedLetterIndices.includes(i)
     ) {
       response += ":yellow_square:";
     } else {
       response += ":black_large_square:";
-      deadLetters.push(currentSession.answer[i]);
+      deadLetters.push(guess[i]);
     }
   }
 
