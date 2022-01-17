@@ -13,12 +13,12 @@ export function tetris(bot: DJ.Client, msg: DJ.Message) {
 type PlayerId = string;
 
 type Session = {
-  playerId: string;
+  playerId: PlayerId;
   answer: string;
   guesses: string[];
 };
 
-const activeSessions: Record<string, Session> = {};
+const activeSessions: Record<PlayerId, Session> = {};
 
 function startTetrisSession(bot: DJ.Client, msg: DJ.Message) {
   const currentPlayerId = msg.author.id;
@@ -39,7 +39,7 @@ function startTetrisSession(bot: DJ.Client, msg: DJ.Message) {
 
 function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
   const currentPlayerId = msg.author.id;
-  if (activeSessions[currentPlayerId]) {
+  if (!activeSessions[currentPlayerId]) {
     return msg.reply(
       "You've not started playing Tetris yet! Start a game with /tetris."
     );
