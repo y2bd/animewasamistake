@@ -59,17 +59,35 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
   }
 
   let response = "";
+  let claimedLetterIndices: number[] = [];
+  let deadLetters: string[] = [];
   for (let i = 0; i < 5; i++) {
     if (guess[i] === currentSession.answer[i]) {
       response += ":green_square:";
-    } else if (currentSession.answer[i].includes(guess[i])) {
-      response += ":yellow_square:";
-    } else {
-      response += ":black_large_square";
+      claimedLetterIndices.push(i);
     }
   }
 
-  msg.reply(response);
+  for (let i = 0; i < 5; i++) {
+    if (
+      currentSession.answer[i].includes(guess[i]) &&
+      !claimedLetterIndices.includes(i)
+    ) {
+      response += ":yellow_square:";
+    } else {
+      response += ":black_large_square:";
+      deadLetters.push(currentSession.answer[i]);
+    }
+  }
+
+  msg.reply(
+    "You guessed '" +
+      guess.toUpperCase() +
+      "', your result is " +
+      response +
+      ", dead letters are " +
+      deadLetters.slice().sort().join("").toUpperCase()
+  );
   currentSession.guesses.push(guess);
 }
 
