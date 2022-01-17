@@ -74,7 +74,7 @@ function continueTetrisSession(bot: DJ.Client, msg: DJ.Message) {
       !claimedLetterIndices.includes(i)
     ) {
       response += ":yellow_square:";
-    } else {
+    } else if (!claimedLetterIndices.includes(i)) {
       response += ":black_large_square:";
       deadLetters.push(guess[i]);
     }
