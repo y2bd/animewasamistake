@@ -78,7 +78,6 @@ const gameList = [
   "CSE 125",
   "Doggo",
   "Chicken Odyssey",
-  "Global Thermonuclear War",
   "The Simpsons: Hit & Run",
   "Street Fighter II' Turbo: Hyper Fighting",
   "Star Wars: Galaxies",
