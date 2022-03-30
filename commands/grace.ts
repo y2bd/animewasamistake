@@ -29,7 +29,7 @@ function runGM(text: string): Promise<{ filename: string }> {
       .fill("#cbcbcb")
       .pointSize(24)
       .out("-size", "520x")
-      .out("-interline-spacing", "8")
+      .out("-interline-spacing", "7")
       .out(`caption:${text}`)
       .out("assets/template.png")
       .out("+swap")
