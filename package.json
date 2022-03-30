@@ -22,6 +22,7 @@
     "cleverbot-node": "0.3.11",
     "d20": "1.4.1",
     "discord.js": "12.5.1",
+    "gm": "1.23.1",
     "google": "2.1.0",
     "imagemagick-cli": "0.5.0",
     "imgur": "0.3.2",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@types/d20": "1.4.0",
+    "@types/gm": "1.18.11",
     "@types/js-levenshtein": "1.1.0",
     "@types/luxon": "2.0.4",
     "@types/node": "14.14.31",

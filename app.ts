@@ -38,7 +38,7 @@ const commands = [
   dootdoot,
   exodia,
   girafarig,
-  // grace,
+  grace,
   irony,
   losangeles,
   nootnoot,
