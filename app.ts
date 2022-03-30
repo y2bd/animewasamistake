@@ -9,6 +9,7 @@ import { dearDexter } from "./commands/deardexter";
 import { dootdoot } from "./commands/dootdoot";
 import { exodia } from "./commands/exodia";
 import { girafarig } from "./commands/girafarig";
+import { grace } from "./commands/grace";
 import { irony } from "./commands/irony";
 import { losangeles } from "./commands/losangeles";
 import { nootnoot } from "./commands/nootnoot";
@@ -37,6 +38,7 @@ const commands = [
   dootdoot,
   exodia,
   girafarig,
+  grace,
   irony,
   losangeles,
   nootnoot,
