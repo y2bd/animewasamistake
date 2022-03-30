@@ -36,14 +36,17 @@ function runGM(text: string): Promise<{ filename: string }> {
       .gravity("North")
       .geometry("+0+45")
       .out("-composite")
-      .write(`assets/${filename}`, (err, stdout, stderr, cmd) => {
-        console.log("Done GM", cmd);
-        if (err) {
-          rej(err);
-        } else {
-          res({ filename: `assets/${filename}` });
+      .write(
+        `assets/${filename}`,
+        (err: unknown, stdout: unknown, stderr: unknown, cmd: unknown) => {
+          console.log("Done GM", cmd);
+          if (err) {
+            rej(err);
+          } else {
+            res({ filename: `assets/${filename}` });
+          }
         }
-      });
+      );
   });
 }
 
