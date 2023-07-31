@@ -58,22 +58,22 @@ export function tomatoTime(bot: DJ.Client, msg: DJ.Message) {
       { hour: adjustedHour, minute },
       { zone: "America/Los_Angeles" }
     )
-      .setZone("Australia/Melbourne")
+      .setZone("Asia/Tokyo")
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     let losAngelesDate = DateTime.fromObject(
       { hour: adjustedHour, minute },
-      { zone: "Australia/Melbourne" }
+      { zone: "Asia/Tokyo" }
     )
       .setZone("America/Los_Angeles")
       .toLocaleString(DateTime.TIME_SIMPLE);
 
     msg.channel.send(
-      `If it's ${currentDate} in Sydney, it would be **${losAngelesDate}** in SF.`
+      `If it's ${currentDate} in Osaka, it would be **${losAngelesDate}** in SF.`
     );
 
     msg.channel.send(
-      `If it's ${currentDate} in San Francisco, it would be **${melbourneDate}** in Sydney.`
+      `If it's ${currentDate} in San Francisco, it would be **${melbourneDate}** in Osaka.`
     );
   } catch (err) {
     msg.channel.send(
