@@ -8,7 +8,7 @@ export function slashes(msg: DJ.Message, command: string) {
 }
 
 export function getImageFromAssets(name: string) {
-  return fs.readFileSync(path.join(process.cwd(), "assets", name));
+  return path.join(process.cwd(), "assets", name);
 }
 
 export function replaceAt(from: string, index: number, replacement: string) {
