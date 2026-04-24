@@ -1,5 +1,16 @@
 import * as DJ from "discord.js";
 
+import * as fs from "fs";
+import * as path from "path";
+
+export function slashes(msg: DJ.Message, command: string) {
+  return msg.content.toLowerCase().startsWith("/" + command.toLowerCase());
+}
+
+export function getImageFromAssets(name: string) {
+  return fs.readFileSync(path.join(process.cwd(), "assets", name));
+}
+
 export function replaceAt(from: string, index: number, replacement: string) {
   return (
     from.substr(0, index) +

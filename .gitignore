@@ -1,2 +1,7 @@
 /node_modules
 secrets.ts
+.env
+.env.*
+
+package.lock.json
+bun.lock

@@ -11,7 +11,7 @@ export function tomatoTown(bot: DJ.Client, msg: DJ.Message) {
     const minimizedLyric = minimize(lyric);
 
     if (levenshtein(minimizedMessage, minimizedLyric) <= 8) {
-      msg.channel.send(song[index + 1]);
+      msg.channel.send(song?.[index + 1] ?? "pro fortnite gamers...");
       return;
     }
   }

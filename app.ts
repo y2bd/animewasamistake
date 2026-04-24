@@ -1,4 +1,4 @@
-import Discord from "discord.js";
+import * as Discord from "discord.js";
 import { alexSays } from "./commands/alexSays";
 import { animate } from "./commands/animate";
 import { animeWasAMistake } from "./commands/animewasamistake";
@@ -13,19 +13,13 @@ import { grace } from "./commands/grace";
 import { irony } from "./commands/irony";
 import { losangeles } from "./commands/losangeles";
 import { nootnoot } from "./commands/nootnoot";
-import { pearRequest } from "./commands/pearreq";
 import { swapGame } from "./commands/pickagame";
 import { pressXToJson } from "./commands/pressXToJson";
 import { roll } from "./commands/roll";
 import { sanic } from "./commands/sanic";
-import { stephenWaifu } from "./commands/stephenWaifu";
 import { tetris } from "./commands/tetris";
 import { tomatoTime } from "./commands/tomatoTime";
 import { tomatoTown } from "./commands/tomatoTown";
-import { whenGame } from "./commands/whengame";
-import { xkcdRequest } from "./commands/xkcdreq";
-import { xkcdSearch } from "./commands/xkcdsearch";
-import secrets from "./secrets";
 
 const commands = [
   alexSays,
@@ -33,7 +27,6 @@ const commands = [
   animeWasAMistake,
   anxiety,
   blue,
-  cleverbot,
   dearDexter,
   dootdoot,
   exodia,
@@ -42,22 +35,18 @@ const commands = [
   irony,
   losangeles,
   nootnoot,
-  pearRequest,
   pressXToJson,
   roll,
   sanic,
-  stephenWaifu,
   tetris,
   tomatoTime,
   tomatoTown,
-  whenGame,
-  xkcdRequest,
-  xkcdSearch,
 ];
 
 const bot = new Discord.Client();
 
 bot.on("ready", () => {
+  console.log("ready!");
   swapGame(bot);
 });
 
@@ -65,7 +54,14 @@ bot.on("message", (msg) => {
   // don't respond to bots
   if (msg.author.bot) return;
 
-  commands.forEach((command) => command(bot, msg));
+  for (const command of commands) {
+    const result = command(bot, msg);
+    if (typeof result !== "undefined" && !!result) {
+      break;
+    }
+  }
+
+  cleverbot(bot, msg);
 });
 
 bot.on("messageDelete", (msg) => {
@@ -77,7 +73,8 @@ bot.on("messageDelete", (msg) => {
   }
 });
 
-bot.login(secrets.secret);
+console.log("logging in");
+bot.login(process.env.DISCORD_SECRET);
 
 process.on("uncaughtExceptionMonitor", (err: Error, origin: unknown) => {
   console.error("Error while running", err, origin);
